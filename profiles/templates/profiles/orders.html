@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Мои заказы - Street Shop{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Меню</h5>
+                </div>
+                <div class="list-group list-group-flush">
+                    <a href="{% url 'profiles:profile' %}" class="list-group-item list-group-item-action">
+                        📋 Мои данные
+                    </a>
+                    <a href="{% url 'profiles:orders' %}" class="list-group-item list-group-item-action active">
+                        📦 Мои заказы
+                    </a>
+                    <a href="{% url 'cart:cart_detail' %}" class="list-group-item list-group-item-action">
+                        🛒 Корзина
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">История заказов</h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        У вас пока нет заказов
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Street Shop - Мужская брендовая одежда</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+    <!-- ШАПКА -->
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container">
+            <a class="navbar-brand" href="/">STREET SHOP</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- ФОРМА ПОИСКА -->
+                    <li class="nav-item me-2">
+                        <form method="get" action="{% url 'catalog:search' %}" class="d-flex">
+                            <input class="form-control form-control-sm" type="search" name="q"
+                                   placeholder="Поиск..." aria-label="Search" style="width: 200px;">
+                            <button class="btn btn-outline-light btn-sm ms-1" type="submit">🔍</button>
+                        </form>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'catalog:product_list' %}">Каталог</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'cart:cart_detail' %}">
+                            🛒 Корзина
+                            {% if user.is_authenticated and user.cart.get_total_items > 0 %}
+                                <span class="badge bg-danger">{{ user.cart.get_total_items }}</span>
+                            {% endif %}
+                        </a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'profiles:profile' %}">Профиль</a>
+                        </li>
+                        <li class="nav-item">
+                            <form method="post" action="{% url 'registration:logout' %}" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="nav-link btn-logout">
+                                    Выйти
+                                </button>
+                            </form>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'registration:login' %}">Войти</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'registration:register' %}">Регистрация</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-3 fade-in">
+
+        <!-- ЗАГОЛОВОК -->
+        <div class="page-header">
+            <h1>🔥 Мужская брендовая одежда</h1>
+            <p class="mb-0">Стиль, качество, уверенность</p>
+        </div>
+
+        <!-- КАТЕГОРИИ -->
+        <div class="mb-4">
+            <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-custom category-btn">Все товары</a>
+            {% for cat in categories %}
+                <a href="{% url 'catalog:product_list_by_category' category_slug=cat.slug %}"
+                   class="btn btn-outline-custom category-btn">
+                    {{ cat.name }}
+                </a>
+            {% endfor %}
+        </div>
+
+        <!-- ТОВАРЫ -->
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-4 mb-4">
+                    <div class="card product-card">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+                        {% else %}
+                            <img src="https://via.placeholder.com/300x250?text=No+Image" class="card-img-top" alt="Нет фото">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.name }}</h5>
+                            <p class="product-category">{{ product.category.name }}</p>
+                            <p class="card-text">{{ product.description|truncatewords:15 }}</p>
+                            <p class="product-price">{{ product.price }} ₽</p>
+
+                            {% if product.stock > 0 %}
+                                <span class="badge bg-success mb-2">В наличии</span>
+                            {% else %}
+                                <span class="badge bg-danger mb-2">Нет в наличии</span>
+                            {% endif %}
+
+                            <div class="mt-2">
+                                <a href="{% url 'catalog:product_detail' slug=product.slug %}"
+                                   class="btn btn-custom w-100">Подробнее</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="alert alert-info text-center">
+                        Товаров пока нет. Загляните позже!
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- ПОДВАЛ -->
+    <footer class="footer">
+        <div class="container">
+            <p class="mb-0">&copy; 2026 Street Shop. Все права защищены.</p>
+            <p class="mb-0 small">Мужская брендовая одежда</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

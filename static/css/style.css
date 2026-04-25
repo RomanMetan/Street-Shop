@@ -1,0 +1,297 @@
+/* ===== ОБЩИЕ СТИЛИ ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+/* Основной контент растягивается */
+main {
+    flex: 1 0 auto;
+}
+
+/* ===== ШАПКА (СОВРЕМЕННАЯ, КОМПАКТНАЯ, НА ВСЮ ШИРИНУ) ===== */
+.navbar-custom {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    padding: 1.6rem 0;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    width: 100%;
+}
+
+.navbar-custom .navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #e94560 !important;
+    letter-spacing: 1px;
+    transition: all 0.2s ease;
+}
+
+.navbar-custom .navbar-brand:hover {
+    transform: scale(1.02);
+    color: #ff6b8a !important;
+}
+
+.navbar-custom .nav-link {
+    color: rgba(255,255,255,0.85) !important;
+    transition: all 0.2s ease;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.navbar-custom .nav-link:hover {
+    color: #e94560 !important;
+    transform: translateY(-1px);
+}
+
+/* Кнопка выхода */
+.btn-logout {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.85) !important;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-logout:hover {
+    color: #e94560 !important;
+    transform: translateY(-1px);
+}
+
+/* Форма поиска */
+.search-input {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    border-radius: 20px;
+    padding: 0.35rem 0.8rem;
+    font-size: 0.85rem;
+    width: 180px;
+    transition: all 0.2s ease;
+}
+
+.search-input:focus {
+    background: rgba(255,255,255,0.15);
+    border-color: #e94560;
+    outline: none;
+    box-shadow: none;
+}
+
+.search-input::placeholder {
+    color: rgba(255,255,255,0.6);
+}
+
+.search-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    color: white;
+    padding: 0.35rem 0.8rem;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.search-btn:hover {
+    background: #e94560;
+    border-color: #e94560;
+}
+
+/* Бейдж корзины */
+.cart-badge {
+    background-color: #e94560;
+    border-radius: 50%;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.7rem;
+    margin-left: 5px;
+    vertical-align: middle;
+}
+
+/* ===== КАРТОЧКИ ТОВАРОВ ===== */
+.product-card {
+    transition: all 0.25s ease;
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    height: 100%;
+    background: white;
+}
+
+.product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.1);
+}
+
+.product-card .card-img-top {
+    height: 250px;
+    object-fit: cover;
+    transition: all 0.3s ease;
+}
+
+.product-card:hover .card-img-top {
+    transform: scale(1.03);
+}
+
+.product-card .card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #1a1a2e;
+}
+
+.product-price {
+    color: #e94560;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.product-category {
+    color: #6c757d;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+/* ===== КНОПКИ ===== */
+.btn-custom {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    border: none;
+    border-radius: 30px;
+    padding: 8px 24px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    color: white;
+    font-size: 0.9rem;
+}
+
+.btn-custom:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(26, 26, 46, 0.3);
+    background: linear-gradient(135deg, #222240 0%, #1a1a30 100%);
+    color: white;
+}
+
+.btn-outline-custom {
+    border-radius: 30px;
+    border: 2px solid #1a1a2e;
+    color: #1a1a2e;
+    transition: all 0.2s ease;
+    background: transparent;
+    padding: 6px 20px;
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+.btn-outline-custom:hover {
+    background: #1a1a2e;
+    border-color: #1a1a2e;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Кнопки категорий */
+.category-btn {
+    border-radius: 30px;
+    margin: 0 6px 10px 0;
+    transition: all 0.2s ease;
+    padding: 6px 18px;
+    font-size: 0.85rem;
+}
+
+.category-btn:hover {
+    transform: translateY(-2px);
+}
+
+/* ===== ЗАГОЛОВОК СТРАНИЦЫ ===== */
+.page-header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: white;
+    padding: 1.8rem;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.page-header h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.page-header p {
+    margin-top: 0.5rem;
+    opacity: 0.85;
+}
+
+/* ===== ПОДВАЛ ===== */
+.footer {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: white;
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 3rem;
+}
+
+/* ===== АНИМАЦИЯ ===== */
+.fade-in {
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== АДАПТИВНОСТЬ ===== */
+@media (max-width: 768px) {
+    .product-card .card-img-top {
+        height: 180px;
+    }
+
+    .product-price {
+        font-size: 1.1rem;
+    }
+
+    .navbar-custom .navbar-brand {
+        font-size: 1.3rem;
+    }
+
+    .page-header h1 {
+        font-size: 1.4rem;
+    }
+
+    .page-header {
+        padding: 1.2rem;
+    }
+
+    .btn-custom, .btn-outline-custom {
+        padding: 5px 15px;
+        font-size: 0.85rem;
+    }
+
+    .search-input {
+        width: 140px;
+        font-size: 0.8rem;
+    }
+}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ product.name }} - Street Shop{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- Фото товара -->
+        <div class="col-md-6">
+            {% if product.image %}
+                <img src="{{ product.image.url }}" class="img-fluid rounded" alt="{{ product.name }}">
+            {% else %}
+                <img src="https://via.placeholder.com/500x500?text=No+Image" class="img-fluid rounded" alt="Нет фото">
+            {% endif %}
+        </div>
+
+        <!-- Информация о товаре -->
+        <div class="col-md-6">
+            <h1 class="mb-3">{{ product.name }}</h1>
+            <p class="text-muted mb-3">Категория: {{ product.category.name }}</p>
+
+            <div class="mb-4">
+                <span class="product-price">{{ product.price }} ₽</span>
+            </div>
+
+            <div class="mb-4">
+                <h5>Описание:</h5>
+                <p>{{ product.description }}</p>
+            </div>
+
+            <div class="mb-4">
+                {% if product.stock > 0 %}
+                    <span class="badge bg-success mb-3">В наличии: {{ product.stock }} шт.</span>
+
+                    <form method="post" action="{% url 'cart:add_to_cart' product.slug %}">
+                        {% csrf_token %}
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+                                <label class="form-label me-2">Количество:</label>
+                            </div>
+                            <div class="col-auto">
+                                <input type="number" name="quantity" value="1" min="1" max="{{ product.stock }}"
+                                       class="form-control" style="width: 80px;">
+                            </div>
+                            <div class="col-auto">
+                                <button type="submit" class="btn btn-custom">
+                                    🛒 Добавить в корзину
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                {% else %}
+                    <span class="badge bg-danger">Нет в наличии</span>
+                    <button class="btn btn-secondary mt-3" disabled>Нет в наличии</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

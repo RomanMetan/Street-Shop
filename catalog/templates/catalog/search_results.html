@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Поиск: {{ query }} - Street Shop{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="page-header">
+        <h1>🔍 Результаты поиска</h1>
+        <p>По запросу "{{ query }}" найдено {{ results_count }} товаров</p>
+    </div>
+
+    <!-- КАТЕГОРИИ -->
+    <div class="mb-4">
+        <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-custom category-btn">Все товары</a>
+        {% for cat in categories %}
+            <a href="{% url 'catalog:product_list_by_category' category_slug=cat.slug %}"
+               class="btn btn-outline-custom category-btn">
+                {{ cat.name }}
+            </a>
+        {% endfor %}
+    </div>
+
+    <!-- ТОВАРЫ -->
+    {% if products %}
+        <div class="row">
+            {% for product in products %}
+                <div class="col-md-3 mb-4">
+                    <div class="card product-card h-100">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+                        {% else %}
+                            <img src="https://via.placeholder.com/300x200?text=No+Image" class="card-img-top" alt="Нет фото" style="height: 200px; object-fit: cover;">
+                        {% endif %}
+                        <div class="card-body">
+                            <h6 class="card-title">{{ product.name|truncatechars:40 }}</h6>
+                            <p class="product-price">{{ product.price }} ₽</p>
+                            <p class="small text-muted">{{ product.category.name }}</p>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <a href="{% url 'catalog:product_detail' slug=product.slug %}" class="btn btn-custom w-100">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info text-center">
+            <p>По запросу "{{ query }}" ничего не найдено</p>
+            <a href="{% url 'catalog:product_list' %}" class="btn btn-custom">Вернуться в каталог</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

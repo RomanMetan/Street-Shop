@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Оформление заказа - Street Shop{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">📋 Оформление заказа</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label class="form-label">Адрес доставки</label>
+                            {{ form.delivery_address }}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Способ оплаты</label>
+                            {{ form.payment_method }}
+                        </div>
+
+                        <button type="submit" class="btn btn-custom w-100">
+                            💳 Перейти к оплате
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0">🛒 Ваш заказ</h5>
+                </div>
+                <div class="card-body">
+                    {% for item in cart.items.all %}
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>{{ item.product.name }} x {{ item.quantity }}</span>
+                            <span>{{ item.get_total_price }} ₽</span>
+                        </div>
+                    {% endfor %}
+                    <hr>
+                    <div class="d-flex justify-content-between fw-bold">
+                        <span>Итого:</span>
+                        <span>{{ cart.get_total_price }} ₽</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

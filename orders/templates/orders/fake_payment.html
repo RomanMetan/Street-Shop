@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}Оплата - Street Shop{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">💳 Оплата заказа</h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <strong>💰 Сумма к оплате:</strong> {{ total_amount }} ₽
+                    </div>
+
+                    <div class="alert alert-secondary">
+                        <strong>🧪 Тестовый режим:</strong>
+                        <p class="mb-0 small">Введите любые данные карты для тестовой оплаты</p>
+                    </div>
+
+                    <form method="post" id="payment-form">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label class="form-label">Номер карты</label>
+                            {{ form.card_number }}
+                            {% if form.card_number.errors %}
+                                <div class="text-danger small">{{ form.card_number.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Владелец карты</label>
+                            {{ form.card_holder }}
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Срок действия</label>
+                                    {{ form.expiry_date }}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">CVV</label>
+                                    {{ form.cvv }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100 py-2">
+                            💰 Оплатить {{ total_amount }} ₽
+                        </button>
+                    </form>
+
+                    <div class="alert alert-warning mt-3 small">
+                        🔐 <strong>Тестовый режим:</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Автоформатирование номера карты (добавляет пробелы каждые 4 цифры)
+    document.querySelector('input[name="card_number"]').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length > 0) {
+            value = value.match(/.{1,4}/g).join(' ');
+        }
+        e.target.value = value;
+    });
+
+    // Автоформатирование срока действия (автоматически ставит /)
+    document.querySelector('input[name="expiry_date"]').addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, '');
+        if (value.length >= 2) {
+            value = value.slice(0, 2) + '/' + value.slice(2, 4);
+        }
+        e.target.value = value;
+    });
+
+    // Ограничение для CVV (только 3 цифры)
+    document.querySelector('input[name="cvv"]').addEventListener('input', function(e) {
+        e.target.value = e.target.value.replace(/\D/g, '').slice(0, 3);
+    });
+</script>
+{% endblock %}
